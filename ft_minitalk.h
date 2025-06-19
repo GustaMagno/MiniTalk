@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_minitalk.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gustoliv <gustoliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:08:04 by gustoliv          #+#    #+#             */
-/*   Updated: 2025/06/18 19:18:47 by gustoliv         ###   ########.fr       */
+/*   Updated: 2025/06/19 22:40:09 by gustoliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 
 typedef unsigned long long	t_ll;
 
-int							ft_printf(const char *str, ...);
+int			ft_printf(const char *str, ...);
+void		send_bit(char *spid, char c);
+void		handler(int sig);
+int			ft_atoi(const char *str);
 
 #endif

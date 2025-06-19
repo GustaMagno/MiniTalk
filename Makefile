@@ -1,11 +1,13 @@
-NAME = libftprintf.a
+NAME = minitalk.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 AR = ar rcs
 RM = rm -f
 
 
-SRCS = ft_printf.c
+SRCS =	ft_printf.c \
+		server.c \
+		client.c 
 
 OBJS = $(SRCS:.c=.o)
 

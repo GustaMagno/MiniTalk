@@ -6,13 +6,65 @@
 /*   By: gustoliv <gustoliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:49:21 by gustoliv          #+#    #+#             */
-/*   Updated: 2025/06/18 22:37:53 by gustoliv         ###   ########.fr       */
+/*   Updated: 2025/06/19 23:10:56 by gustoliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk.h"
 
-int main(int pid, char	*str)
+int	ft_atoi(const char *str)
 {
+	unsigned int	i;
+	int				check;
+	int				nb;
+
+	i = 0;
+	check = 0;
+	nb = 0;
+	while ((str[i] > 8 && str[i] < 14) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			check++;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		nb = (nb * 10) + (str[i] - 48);
+		i++;
+	}
+	if (check == 1)
+		nb *= -1;
+	return (nb);
+}
+
+void	send_bit(char *spid, char c)
+{
+	int	i;
+
 	
+	i = 7;
+	while (1)
+	{
+		if ((c >> i--) & 1)
+			kill(ft_atoi(spid), SIGUSR1);
+		else
+			kill(ft_atoi(spid), SIGUSR2);
+		if (i == 0)
+			return ;
+	}
+}
+
+int main(int argc, char	**str)
+{
+	argc = 1;
+	if (argc != 3)
+		return (0);
+	kill(ft_atoi(str[1]), SIGUSR1);
+	// while (*str[1])
+	// {
+	// 	send_bit(str[0], *str[1]);
+	// 	str[1]++;
+	// }
 }
