@@ -6,7 +6,7 @@
 /*   By: gustoliv <gustoliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:49:21 by gustoliv          #+#    #+#             */
-/*   Updated: 2025/06/19 23:10:56 by gustoliv         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:47:04 by gustoliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,29 @@ void	send_bit(char *spid, char c)
 	i = 7;
 	while (1)
 	{
-		if ((c >> i--) & 1)
-			kill(ft_atoi(spid), SIGUSR1);
-		else
+		if ((c >> i) & 1)
+		{
 			kill(ft_atoi(spid), SIGUSR2);
-		if (i == 0)
+			usleep(100);
+		}
+		else
+		{
+			kill(ft_atoi(spid), SIGUSR1);
+			usleep(100);
+		}
+		if (i-- == 0)
 			return ;
 	}
 }
 
 int main(int argc, char	**str)
 {
-	argc = 1;
 	if (argc != 3)
 		return (0);
-	kill(ft_atoi(str[1]), SIGUSR1);
-	// while (*str[1])
-	// {
-	// 	send_bit(str[0], *str[1]);
-	// 	str[1]++;
-	// }
+	// kill(ft_atoi(str[1]), SIGUSR2);
+	while (*str[2])
+	{
+		send_bit(str[1], *str[2]);
+		str[2]++;
+	}
 }

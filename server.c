@@ -6,7 +6,7 @@
 /*   By: gustoliv <gustoliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:49:28 by gustoliv          #+#    #+#             */
-/*   Updated: 2025/06/19 23:07:32 by gustoliv         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:22:07 by gustoliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main(void)
 	ft_printf("----------------------------------\n", pid);
 	ft_printf("               SERVER            \n", pid);
 	ft_printf("----------------------------------\n", pid);
-	ft_printf("Process ID: %d", pid);
+	ft_printf("Process ID: %d\n Mensage:", pid);
 	signal(SIGUSR1, handler);
 	signal(SIGUSR2, handler);
 	while (1)
