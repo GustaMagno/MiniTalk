@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gustoliv <gustoliv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:49:28 by gustoliv          #+#    #+#             */
-/*   Updated: 2025/06/19 23:07:32 by gustoliv         ###   ########.fr       */
+/*   Updated: 2025/06/24 13:36:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,19 @@
 
 void	handler(int sig)
 {
+	static char	c;
+	static int i = 7;
+
 	if (sig == SIGUSR1)
-		ft_printf("0");
+		c |= (0 << i);
 	if (sig == SIGUSR2)
-		ft_printf("1");
+		c |= (1 << i);
+	if (i-- == 0)
+	{
+		ft_printf("%c", c);
+		c = 0;
+		i = 7;
+	}
 }
 
 int main(void)
@@ -28,9 +37,10 @@ int main(void)
 	ft_printf("----------------------------------\n", pid);
 	ft_printf("               SERVER            \n", pid);
 	ft_printf("----------------------------------\n", pid);
-	ft_printf("Process ID: %d", pid);
+	ft_printf("Process ID: %d\n Mensage:", pid);
 	signal(SIGUSR1, handler);
 	signal(SIGUSR2, handler);
 	while (1)
 		pause();
 }
+

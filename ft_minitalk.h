@@ -22,6 +22,8 @@
 
 # define HEX_U "0123456789ABCDEF"
 # define HEX_L "0123456789abcdef"
+# define SIGUSR1 10
+# define SIGUSR2 12
 
 typedef unsigned long long	t_ll;
 
