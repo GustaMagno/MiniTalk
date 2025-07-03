@@ -39,6 +39,24 @@ int	ft_atoi(const char *str)
 		nb *= -1;
 	return (nb);
 }
+void	send_len(char *spid, char *s)
+{
+	int i;
+	int len;
+
+	while (s[len])
+		len++;
+	i = 32;
+	while (1)
+	{
+		if ((len >> i) & 1)
+			kill(ft_atoi(spid), SIGUSR2);
+		else
+			kill(ft_atoi(spid), SIGUSR1);
+		if (i-- == 0)
+			return ;
+	}
+}
 
 void	send_bit(char *spid, char c)
 {
@@ -49,15 +67,9 @@ void	send_bit(char *spid, char c)
 	while (1)
 	{
 		if ((c >> i) & 1)
-		{
 			kill(ft_atoi(spid), SIGUSR2);
-			usleep(200);
-		}
 		else
-		{
 			kill(ft_atoi(spid), SIGUSR1);
-			usleep(200);
-		}
 		if (i-- == 0)
 			return ;
 	}
@@ -68,6 +80,7 @@ int main(int argc, char	**str)
 	if (argc != 3)
 		return (0);
 	// kill(ft_atoi(str[1]), SIGUSR2);
+	send_len(str[1], str[2]);
 	while (*str[2])
 	{
 		send_bit(str[1], *str[2]);

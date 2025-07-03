@@ -2,7 +2,7 @@
 
 //o caractere tem que ser static pq nao pode reiniciar
 
-void send_bit(char c)
+void send_bit(char c);
 
 int main()
 {
