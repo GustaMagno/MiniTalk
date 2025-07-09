@@ -86,4 +86,5 @@ int main(int argc, char	**str)
 		send_bit(str[1], *str[2]);
 		str[2]++;
 	}
+		send_bit(str[1], '\0');
 }
