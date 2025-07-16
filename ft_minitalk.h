@@ -28,8 +28,12 @@
 typedef unsigned long long	t_ll;
 
 int			ft_printf(const char *str, ...);
-void		send_bit(char *spid, char c);
-void		handler(int sig);
+void		send_bit(int pid, char c);
+void		handler_ack(int sig);
 int			ft_atoi(const char *str);
+void		make_string(int number, char c);
+void		handler(int sig, siginfo_t *info, void *cpu);
+void		send_len(int pid, char *s);
+void		handler_ack(int sig);
 
 #endif

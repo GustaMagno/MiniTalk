@@ -39,26 +39,32 @@ int	ft_atoi(const char *str)
 		nb *= -1;
 	return (nb);
 }
-void	send_len(char *spid, char *s)
+void	handler_ack(int sig)
+{
+	(void)sig;
+}
+void	send_len(int pid, char *s)
 {
 	int i;
 	int len;
 
+	len = 0;
 	while (s[len])
 		len++;
-	i = 32;
+	i = 31;
 	while (1)
 	{
 		if ((len >> i) & 1)
-			kill(ft_atoi(spid), SIGUSR2);
+			kill(pid, SIGUSR2);
 		else
-			kill(ft_atoi(spid), SIGUSR1);
+			kill(pid, SIGUSR1);
 		if (i-- == 0)
 			return ;
+		pause();
 	}
 }
 
-void	send_bit(char *spid, char c)
+void	send_bit(int pid, char c)
 {
 	int	i;
 
@@ -67,24 +73,27 @@ void	send_bit(char *spid, char c)
 	while (1)
 	{
 		if ((c >> i) & 1)
-			kill(ft_atoi(spid), SIGUSR2);
+			kill(pid, SIGUSR2);
 		else
-			kill(ft_atoi(spid), SIGUSR1);
+			kill(pid, SIGUSR1);
 		if (i-- == 0)
 			return ;
+		pause();
 	}
 }
 
 int main(int argc, char	**str)
 {
+	int pid;
+
+	signal(SIGUSR1, handler_ack);
 	if (argc != 3)
 		return (0);
-	// kill(ft_atoi(str[1]), SIGUSR2);
-	send_len(str[1], str[2]);
+	pid = ft_atoi(str[1]);
+	send_len(pid, str[2]);
 	while (*str[2])
 	{
-		send_bit(str[1], *str[2]);
+		send_bit(pid, *str[2]);
 		str[2]++;
 	}
-		send_bit(str[1], '\0');
 }
