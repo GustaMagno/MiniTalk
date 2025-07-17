@@ -42,6 +42,11 @@ int	ft_atoi(const char *str)
 void	handler_ack(int sig)
 {
 	(void)sig;
+	if (sig == SIGUSR2)
+	{
+		ft_printf("String done");
+		exit(0);
+	}
 }
 void	send_len(int pid, char *s)
 {
@@ -85,6 +90,7 @@ int main(int argc, char	**str)
 	int pid;
 
 	signal(SIGUSR1, handler_ack);
+	signal(SIGUSR2, handler_ack);
 	if (argc != 3)
 		return (0);
 	pid = ft_atoi(str[1]);
@@ -96,4 +102,5 @@ int main(int argc, char	**str)
 		send_bit(pid, *str[2]);
 		str[2]++;
 	}
+	pause();
 }

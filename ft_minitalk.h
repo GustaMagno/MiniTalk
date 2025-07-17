@@ -33,5 +33,14 @@ void		handler_ack(int sig);
 int			ft_atoi(const char *str);
 void		send_len(int pid, char *s);
 void		handler_ack(int sig);
+typedef struct s_variables
+{
+	char	c;
+	int number;
+	int count;
+	int i;
+	 char	*str;
+} t_variables;
+
 
 #endif

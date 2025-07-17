@@ -3,64 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gustoliv <gustoliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:49:28 by gustoliv          #+#    #+#             */
-/*   Updated: 2025/07/16 23:35:30 by marvin           ###   ########.fr       */
+/*   Updated: 2025/07/17 14:07:58 by gustoliv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk.h"
 #include <signal.h>
 
-void	make_string(int *number, char c, int *count)
+int	make_string(t_variables *v,  siginfo_t *info)
 {
-	static char	*str = NULL;
 	static int	i = 0;
 
-	if (!str)
+	if (!v->str)
 	{
-		str = malloc(*number + 1);
-		if (!str)
+		v->str = malloc(v->number + 1);
+		if (!v->str)
 			exit(1);
 	}
-
-	if (i < *number)
-		str[i++] = c;
-	if (i == *number)
+	if (i < v->number)
+		v->str[i++] = v->c;
+	v->c = 0;
+	v->i = 7;
+	if (i == v->number)
 	{
-		str[i] = '\0';
-		ft_printf("%s\n", str);
-		free(str);
-		str = NULL;
-		*count = 31;
-		*number = 0;
+		v->str[i] = '\0';
+		ft_printf("%s\n", v->str);
+		free(v->str);
+		v->str = NULL;
+		v->count = 31;
+		v->number = 0;
 		i = 0;
+		return (1);
 	}
+	return (0);
 }
 
 static void	handler(int sig, siginfo_t *info)
 {
-	static char	c = 0;
-	static int number = 0;
-	static int count = 31;
-	static int i = 7;
+	static t_variables v = (t_variables){.c=0, .count=31, .number=0, .i=7};
 
-	if (count >= 0)
-	{
-		if (sig == SIGUSR2)
-			number |= (1 << count);
-		count--;
-	}
+	if (v.count >= 0)
+		v.number |= ((sig == SIGUSR2) << v.count--);
 	else
 	{
 		if (sig == SIGUSR2)
-			c |= (1 << i);
-		if (i-- == 0)
+			v.c |= (1 << v.i);
+		if (v.i-- == 0)
 		{
-			make_string(&number, c, &count);
-			c = 0;
-			i = 7;
+			if (make_string(&v, info))
+			{			
+				kill(info->si_pid, SIGUSR2);
+				return;
+			}
 		}
 	}
 	kill(info->si_pid, SIGUSR1);
